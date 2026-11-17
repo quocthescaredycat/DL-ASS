@@ -1,0 +1,50 @@
+{
+  "pdf_pages": 29,
+  "source_words": 7446,
+  "figures": 17,
+  "images_valid": true,
+  "models": [
+    {
+      "model": "linear",
+      "accuracy": 0.8426,
+      "macro_f1": 0.8416943870447922,
+      "selected_epoch": 9,
+      "rows": 10000,
+      "test_summary_sha256": "39bfa7f43faf317cfaf6bbaafb13021d0edc92e1a83b03aa1ded8b4972f1de9f"
+    },
+    {
+      "model": "mlp",
+      "accuracy": 0.885,
+      "macro_f1": 0.8845854977235442,
+      "selected_epoch": 8,
+      "rows": 10000,
+      "test_summary_sha256": "9adf7fddbf70a543ae515360b86e54c24965ef8e40ab55a45c9061217e6c3cea"
+    },
+    {
+      "model": "cnn",
+      "accuracy": 0.9194,
+      "macro_f1": 0.9188856918388074,
+      "selected_epoch": 10,
+      "rows": 10000,
+      "test_summary_sha256": "19f8137f5655713629cf9ce0fd9071ceda99521f958712513ab12efc7e252b65"
+    },
+    {
+      "model": "lstm",
+      "accuracy": 0.8848,
+      "macro_f1": 0.8834956959520911,
+      "selected_epoch": 9,
+      "rows": 10000,
+      "test_summary_sha256": "50cb3f724676f79bab300f9813fb0c9cb4ca4ccd2e675582c2645fc18c54e661"
+    },
+    {
+      "model": "transformer",
+      "accuracy": 0.8555,
+      "macro_f1": 0.852387328978546,
+      "selected_epoch": 10,
+      "rows": 10000,
+      "test_summary_sha256": "972bafd5288c5f0341d426311c2735ee0cef887591b4c9c5a7652eb4b77a4db7"
+    }
+  ],
+  "checks": "Prediction CSV accuracy/F1, saved confusion counts, checkpoint epoch, PDF text and image integrity",
+  "ai_usage_sha256": "c1277689beda08b7174c75bfcf26b2e1b129238159629d71766ead9f73642886"
+}

@@ -12,6 +12,9 @@ for the shared data pipeline, training loop, and model guides.
 Assignment 2's notebook-first full-waveform preparation, training, saved-run
 metadata and evaluation instructions are in [A2/README.md](A2/README.md).
 
+Assignment 3's PairDX dataset proposal for M1, submission PDF and rebuild
+instructions are in [A3/README.md](A3/README.md).
+
 ```
 index.html          shared landing page (institution, course, group, AI disclosure)
 assignment1.html     Assignment 1 page

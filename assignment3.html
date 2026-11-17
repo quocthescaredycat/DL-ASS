@@ -3,84 +3,156 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assignment 3 — CO3133</title>
+  <title>Assignment 3 &mdash; PairDX Dataset Proposal &mdash; CO3133</title>
   <link rel="stylesheet" href="style.css?v=2" />
+  <style>
+    .table-scroll { overflow-x: auto; }
+    .table-scroll:focus-visible { outline: 2px solid #1a4b8c; outline-offset: 4px; }
+    caption { text-align: left; font-size: 0.9rem; margin-bottom: 8px; }
+    .counts td { white-space: nowrap; }
+    .models { min-width: 520px; }
+    code, a { overflow-wrap: anywhere; }
+    @media (max-width: 640px) {
+      .page { margin: 16px; padding: 24px 16px 32px; }
+      header h1 { font-size: 1.7rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="page">
     <p class="back"><a href="index.html">&larr; Back to group page</a></p>
 
     <header class="assignment-header">
-      <h1>Assignment 3 — Multimodal Deep Learning</h1>
+      <h1>Assignment 3 &mdash; Medical Image&ndash;Text Classification</h1>
+      <p class="sub">Group G-09 &middot; CC01 &middot; M1 Dataset Proposal</p>
+      <p>Multimodal Deep Learning: comparing image-only, text-only and fusion models on paired medical figures and captions from PairDX.</p>
+      <p><a href="#dataset">Dataset and preliminary EDA</a> &middot; <a href="#models">Planned models</a> &middot; <a href="#protocol">Evaluation plan</a></p>
     </header>
 
     <section>
       <h2>Group members</h2>
       <p>Lê Phước Vũ (2353341) &middot; Nguyễn Vũ Long (2352696) &middot; Nguyễn Hoàng Quốc (2353027)</p>
+      <p>CO3133 &middot; Deep Learning and Its Applications &middot; Semester 261 &middot; Instructor: Lê Thành Sách</p>
     </section>
 
     <section>
       <h2>Dataset proposal status</h2>
-      <p class="todo">TODO: task chosen (image–text classification / retrieval / VQA / captioning / etc.); proposal submitted [date]; approval status: Approved / Approved with conditions / Rejected / Pending.</p>
+      <p><strong>Pending instructor review.</strong> We propose using PairDX version 1.0 for six-class image&ndash;text classification. The archive contains a larger, imbalanced population than the published description; approval is requested for the archive population described below.</p>
+      <p>This M1 submission contains preliminary metadata analysis and a proposed experiment plan. Main experiments will begin after the instructor records <strong>Approved</strong> or <strong>Approved with conditions</strong>.</p>
     </section>
 
     <section>
       <h2>Problem statement</h2>
-      <p class="todo">TODO: modalities used, cross-modal alignment (entity/event/scene/timestamp), input/output, difficulties.</p>
-    </section>
-
-    <section>
-      <h2>Dataset description and EDA</h2>
-      <p class="todo">TODO: pair counts, missing-modality rate, text length (if applicable), pair quality.</p>
-    </section>
-
-    <section>
-      <h2>Methodology</h2>
-      <p class="todo">TODO: modality encoders, fusion stage (early/intermediate/late), fusion operation, losses.</p>
-    </section>
-
-    <section>
-      <h2>Experimental setup</h2>
-      <p class="todo">TODO: unimodal A, unimodal B, simple fusion, improved fusion — training config, seeds, hardware.</p>
-    </section>
-
-    <section>
-      <h2>Results</h2>
-      <p class="todo">TODO: task-specific metrics (see handbook Sec. 29.3), unimodal vs. multimodal comparison.</p>
-    </section>
-
-    <section>
-      <h2>Comparison and discussion</h2>
-      <p class="todo">TODO: cases where modalities support each other; cases where they conflict.</p>
-    </section>
-
-    <section>
-      <h2>Error analysis</h2>
-      <p class="todo">TODO: error groups, frequency, examples, causes; at least one modality/fusion ablation.</p>
-    </section>
-
-    <section>
-      <h2>Limitations and conclusion</h2>
-      <p class="todo">TODO: limits, generalization, future work.</p>
-    </section>
-
-    <section>
-      <h2>Links</h2>
+      <p>Predict the broad type of a medical figure from its image and original caption. The study asks whether combining visual and textual evidence improves classification over either modality alone, especially when captions are short or ambiguous.</p>
       <ul>
-        <li>Source code: <a href="https://github.com/quocthescaredycat/DL-ASS">github.com/VVTN13/DL-ASS</a></li>
-        <li>Checkpoints / reproduction instructions: <a href="#">[link]</a></li>
-        <li>Report / slides: <a href="#">[link]</a></li>
-        <li>YouTube presentation: <a href="#">[link]</a></li>
+        <li><strong>Task:</strong> six-class image&ndash;text classification.</li>
+        <li><strong>Input:</strong> one WEBP image and its original English caption.</li>
+        <li><strong>Output:</strong> one of radiology, medical photograph, endoscopy, chart, ophthalmic imaging or electrography, using <code>image_type</code> as the target.</li>
+        <li><strong>Alignment:</strong> each metadata record associates the caption with its image file, original figure and case.</li>
+        <li><strong>Challenges:</strong> class imbalance, generic captions, repeated figures/text, multi-panel ambiguity and potentially noisy labels.</li>
       </ul>
     </section>
 
-    <section>
-      <h2>AI usage disclosure</h2>
-      <p class="todo">TODO: assignment-specific disclosure, or "The group declares that no generative AI tool was used in this assignment."</p>
+    <section id="dataset">
+      <h2>Dataset description and preliminary EDA</h2>
+      <ul>
+        <li><strong>Name and source:</strong> <a href="https://zenodo.org/records/17452236">PairDX</a>, derived from <a href="https://zenodo.org/records/14994046">MultiCaRe</a>.</li>
+        <li><strong>Version:</strong> 1.0, published 27 October 2025. DOI: <a href="https://doi.org/10.5281/zenodo.17452236">10.5281/zenodo.17452236</a>.</li>
+        <li><strong>Download:</strong> <code>PairDX.zip</code>, approximately 1.93 GB, containing medical images, English captions and image metadata.</li>
+        <li><strong>License:</strong> the PairDX record declares MIT, while the archive retains mixed per-image licenses and the upstream collection specifies CC BY-NC-SA with item-specific terms. Preserve attribution and license metadata, check permissions before use, and exclude items with unresolved permissions. Obtain raw images from the original source.</li>
+        <li><strong>Annotations:</strong> broad image type, image subtype, machine-learning label lists, a separate semisupervised ground-truth field, and case/figure identifiers. Supplied targets may be noisy and have not been independently verified.</li>
+      </ul>
+      <p><strong>Proposed population:</strong> inspection of the ZIP directory and complete metadata found <strong>103,384 WEBP entries and 103,384 metadata records</strong>. The public record advertises 22,665 balanced pairs. The proposal uses the supplied archive population, subject to filtering and instructor approval.</p>
+      <div class="table-scroll" role="region" aria-label="PairDX candidate class distribution" tabindex="0">
+        <table class="counts">
+          <caption>Candidate image&ndash;caption records before quality filtering, deduplication and splitting.</caption>
+          <thead><tr><th scope="col">Class</th><th scope="col">Candidate pairs</th><th scope="col">Share</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Radiology</th><td>68,020</td><td>65.79%</td></tr>
+            <tr><th scope="row">Medical photograph</th><td>22,068</td><td>21.35%</td></tr>
+            <tr><th scope="row">Endoscopy</th><td>3,830</td><td>3.70%</td></tr>
+            <tr><th scope="row">Chart</th><td>3,830</td><td>3.70%</td></tr>
+            <tr><th scope="row">Ophthalmic imaging</th><td>3,695</td><td>3.57%</td></tr>
+            <tr><th scope="row">Electrography</th><td>1,941</td><td>1.88%</td></tr>
+            <tr><th scope="row">Total</th><td><strong>103,384</strong></td><td><strong>100%*</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>*Shares are rounded. Radiology is approximately 35 times as frequent as electrography, motivating macro-F1 and per-class metrics. The candidate population exceeds the course threshold of at least five classes and about 5,000 pairs; retained counts will be checked after filtering.</p>
+      <div class="table-scroll" role="region" aria-label="Preliminary metadata quality checks" tabindex="0">
+        <table>
+          <caption>Complete metadata analysis, performed on 18 November 2026.</caption>
+          <thead><tr><th scope="col">Check</th><th scope="col">Observed result</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Blank/null caption, filename or class</th><td>0 records for each field</td></tr>
+            <tr><th scope="row">Distinct cases / source articles</th><td>30,219 / 28,426</td></tr>
+            <tr><th scope="row">Caption words: median / 95th percentile</th><td>16 / 48</td></tr>
+            <tr><th scope="row">Captions of at most three words</th><td>5,668 (5.48%)</td></tr>
+            <tr><th scope="row">Rows in repeated normalized-caption groups</th><td>14,560 (14.08%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Text lengths count whitespace-separated words. Repeated-caption counts include every member of a group after lowercasing and whitespace normalization. Nonempty metadata does not establish image availability or correct alignment: image decoding, missing-image rates and visual mismatch rates remain unverified.</p>
     </section>
 
+    <section>
+      <h2>Pair validation and preprocessing plan</h2>
+      <ol>
+        <li>Read <code>image_metadata.json</code> as newline-delimited JSON. Match <code>file</code> to the archive image basename and rebuild its relative path. Keep <code>case_id</code> and <code>main_image</code> for provenance.</li>
+        <li>Decode every image, check caption and target availability, and remove invalid pairs. Review 20 randomly selected pairs per class with seed 42, plus short-caption and multi-panel examples. Report missing, noisy and mismatched pairs separately.</li>
+        <li>Convert images to RGB and use the pretrained image encoder's 224 &times; 224 preprocessing and normalization. Check that cropping preserves the relevant figure content. Tokenize original captions with the text encoder's tokenizer, with a maximum of 256 wordpieces; report truncation rates.</li>
+        <li>Use only images and captions as model inputs. Keep filenames, case IDs, label fields and case narratives out of the feature inputs. Fit class weights and any learned preprocessing on training data only.</li>
+      </ol>
+    </section>
+
+    <section id="protocol">
+      <h2>Splitting and leakage prevention</h2>
+      <p><strong>Split unit: source PMC article.</strong> Obtain the article prefix from <code>case_id</code>; all cases, figures and panels from one article stay together. Before splitting, connect article groups sharing exact image duplicates or identical normalized captions of at least eight words, and review near-duplicate image candidates.</p>
+      <ul>
+        <li><strong>Training / validation / test:</strong> approximately 70% / 15% / 15%, using seed 42 and whole article/duplicate groups.</li>
+        <li><strong>Stratification:</strong> preserve class proportions as closely as grouping permits; publish actual retained class and group counts in each split.</li>
+        <li><strong>Leakage checks:</strong> verify zero article and duplicate-image overlap. Select settings and checkpoints with validation data; reserve test data for the final fixed comparison.</li>
+        <li><strong>Limitation:</strong> cross-article patient identifiers are unavailable, so patient overlap between different articles cannot be ruled out.</li>
+      </ul>
+    </section>
+
+    <section id="models">
+      <h2>Evaluation and model plan</h2>
+      <ul>
+        <li><strong>Primary metric:</strong> macro-F1 across all six classes.</li>
+        <li><strong>Secondary metrics:</strong> accuracy, per-class precision/recall/F1 and a confusion matrix.</li>
+        <li><strong>Reporting:</strong> compare models on the same fixed split and report mean and standard deviation over run seeds 42, 43 and 44.</li>
+        <li><strong>Training plan:</strong> initially freeze both pretrained encoders, cache features, and train classification heads using class-weighted cross-entropy. Select checkpoints by validation macro-F1.</li>
+      </ul>
+      <div class="table-scroll" role="region" aria-label="Required unimodal and multimodal models" tabindex="0">
+        <table class="models">
+          <caption>Planned models; these are proposal choices, with no trained results yet.</caption>
+          <thead><tr><th scope="col">Model</th><th scope="col">Representation</th><th scope="col">Prediction / fusion</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Image-only baseline</th><td>ImageNet-pretrained ResNet-18, 512-dimensional pooled image features.</td><td>Trainable MLP with six output logits.</td></tr>
+            <tr><th scope="row">Text-only baseline</th><td>Pretrained all-MiniLM-L6-v2, 384-dimensional caption embeddings.</td><td>Trainable MLP with six output logits.</td></tr>
+            <tr><th scope="row">Simple fusion baseline</th><td>Image and text features projected to 256 dimensions each.</td><td>Intermediate fusion by concatenation, followed by an MLP.</td></tr>
+            <tr><th scope="row">Improved fusion</th><td>The same image and text representations.</td><td>A learned gate weights the projected features before classification.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Use identical splits, frozen features and checkpoint rules across models. The proposed gate tests whether adjusting each modality's contribution helps with generic captions or ambiguous figures. Multimodal improvement will be assessed from the results rather than assumed.</p>
+    </section>
+
+    <section>
+      <h2>Compute and storage estimate</h2>
+      <p>Planned hardware is an <strong>NVIDIA GTX 1660 SUPER with 6 GB VRAM</strong>. Extract frozen features one encoder at a time, starting with batch size 32. The two float32 feature arrays require approximately <strong>370.5 MB</strong> for the candidate population. Allow approximately <strong>10 GB</strong> working disk space plus the Python environment.</p>
+      <p>Reserve approximately <strong>4&ndash;12 hours overall</strong>: 2&ndash;6 GPU-hours for feature extraction, 1&ndash;4 hours for classifier experiments and 1&ndash;2 hours for evaluation. These are planning estimates; calibrate them with a small training-data pilot after approval.</p>
+    </section>
+
+    <section>
+      <h2>Subset rules</h2>
+      <p>Use all eligible pairs by default. If measured cost prevents completion, request approval for a training-only cap of 4,000 pairs per class, selected with seed 42 after the group split. Keep validation and test unchanged, use the same training subset for every model, and report retained class/group counts against the course threshold.</p>
+    </section>
+
+
     <footer>
-      <p>Last updated: 08/09/2026</p>
+      <p>Last updated: <time datetime="2026-11-18">18 November 2026</time> &middot; M1 dataset proposal &middot; Due 23:59 GMT+7.</p>
     </footer>
   </div>
 </body>
